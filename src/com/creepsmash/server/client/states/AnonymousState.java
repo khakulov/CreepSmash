@@ -3,13 +3,13 @@ package com.creepsmash.server.client.states;
 import org.apache.log4j.Logger;
 
 import com.creepsmash.common.IConstants;
+import com.creepsmash.common.Version;
 import com.creepsmash.common.messages.client.ClientMessage;
 import com.creepsmash.common.messages.client.LoginRequestMessage;
 import com.creepsmash.common.messages.client.RegistrationRequestMessage;
 import com.creepsmash.common.messages.server.LoginResponseMessage;
 import com.creepsmash.common.messages.server.RegistrationResponseMessage;
 import com.creepsmash.server.AuthenticationService;
-import com.creepsmash.server.Server;
 import com.creepsmash.server.client.Client;
 
 
@@ -57,7 +57,7 @@ public class AnonymousState extends AbstractClientState {
 			String clientVersion = loginRequestMessage.getVersion();
 
 			// Check Version
-			if (!clientVersion.equals(Server.getVersion())) {
+			if (!clientVersion.equals(Version.getVersion())) {
 				logger.warn("client " + this.getClient()
 						+ " has wrong version: " + clientVersion);
 				loginResponseMessage

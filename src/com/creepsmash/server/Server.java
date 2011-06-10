@@ -1,12 +1,10 @@
 package com.creepsmash.server;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -27,6 +25,7 @@ import org.apache.log4j.xml.DOMConfigurator;
 import org.w3c.dom.Document;
 
 import com.creepsmash.common.IConstants;
+import com.creepsmash.common.Version;
 import com.creepsmash.server.client.Client;
 
 
@@ -57,7 +56,7 @@ public class Server {
 		// init the log4J logger
 		initLogger();		
 
-		logger.info("Starting server version " + getVersion() + "...");
+		logger.info("Starting server version " + Version.getVersion() + "...");
 
 		// check if working directory is writeable
 		if (!new File("./").canWrite()) {
@@ -195,30 +194,5 @@ public class Server {
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
 		}
-	}
-
-		    
-	/**
-	 * @return the server version
-	 */
-	public static String getVersion() {
-		String version = null;
-
-		InputStream inStream = Server.class.getResourceAsStream("version");
-		try {
-			if (inStream.available() > 0) {
-				InputStreamReader inStreamReader = new InputStreamReader(inStream);
-				BufferedReader reader = new BufferedReader(inStreamReader);
-				version = reader.readLine();
-			}
-		} catch (IOException e) {
-			logger.warn("caught Exception while finding out version", e);
-		}
-		
-		if (version == null) {
-			version = "-unknown-";
-		}
-
-		return version;
 	}
 }
