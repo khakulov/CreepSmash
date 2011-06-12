@@ -12,6 +12,7 @@ import javax.swing.KeyStroke;
 import com.creepsmash.client.Core;
 import com.creepsmash.client.game.Game;
 import com.creepsmash.client.game.contexts.Context;
+import com.creepsmash.client.game.grids.Grid;
 import com.creepsmash.client.game.panels.ChatPanel;
 import com.creepsmash.client.game.panels.CreepInfoPanel;
 import com.creepsmash.client.game.panels.CreepSelPanel;
@@ -247,8 +248,10 @@ public class GameScreen extends Screen implements MessageListener {
 				this.type = type;
 			}
 			public void actionPerformed(ActionEvent event) {
-				if (!context.isDead())
-					context.buyTower(this.type);		
+				Grid g = context.getGameBoard().getHighlightedGrid();
+				if (g != null)
+					context.buyTower(this.type, g);
+						
 			}
 		}
 

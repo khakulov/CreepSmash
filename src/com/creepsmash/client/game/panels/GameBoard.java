@@ -1,4 +1,4 @@
-package com.creepsmash.client.game.contexts;
+package com.creepsmash.client.game.panels;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -17,12 +17,14 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import com.creepsmash.client.Core;
+import com.creepsmash.client.game.contexts.BoardLocation;
+import com.creepsmash.client.game.contexts.Context;
+import com.creepsmash.client.game.contexts.Path;
 import com.creepsmash.client.game.grids.EmptyGrid;
 import com.creepsmash.client.game.grids.Grid;
 import com.creepsmash.client.game.grids.HolyGrid;
 import com.creepsmash.client.game.grids.PathGrid;
 import com.creepsmash.client.game.towers.Tower;
-import com.creepsmash.common.TowerType;
 
 
 /**
@@ -315,17 +317,7 @@ public class GameBoard implements MouseListener, MouseMotionListener {
     public void clearImage() {
         this.clearImg = true;
     }
-	/**
-	 * Sets the highlight for all grids to false.
-	 */
-	private void unHighlight() {
-		for (int i = 0; i < gridArray.length; i++) {
-			for (int j = 0; j < gridArray[0].length; j++) {
-				gridArray[i][j].setHighlight(false);
-			}
-		}
-	}
-	
+
 	/**
 	 * deselects all towers.
 	 */
@@ -467,45 +459,21 @@ public class GameBoard implements MouseListener, MouseMotionListener {
 
 	public void mouseDragged(MouseEvent e) {
 		if (context.getLocation().getBounds().contains(e.getPoint())) {
-
 			Grid g = getGridForLocation(e.getX(), e.getY());
-
 			processClick(g);
 		} 
 	}
 
 	public void mouseMoved(MouseEvent e) {
-		unHighlight();
+		this.clearHighlight();
 		if (context.getLocation().getBounds().contains(e.getPoint())) {
 			Grid g = getGridForLocation(e.getX(), e.getY());
-			if (g != null) {
-				g.setHighlight(true);
-			}
+			g.setHighlight(true);
 		}
 	}
-	
-	/**
-	 * This method is used to buy a tower per shortcut.
-	 * The grid position is selected by the highlighted grid (cell).
-	 * 
-	 * @param tower Tower that should be build
-	 */
-	public void buyTowerPerShortcut(TowerType tower) {
-		Grid g = null;
-		
-		// get the highlighted grid (cell)
-		for (int i = 0; i < gridArray.length; i++) {
-			for (int j = 0; j < gridArray[0].length; j++) {
-				if (gridArray[i][j].getHighlight())
-					g = gridArray[i][j];
-			}
-		}
-		this.context.buyTower(tower, g);
-	}
-	
+
 	public Grid getHighlightedGrid() {
 		Grid g = null;
-		
 		// get the highlighted grid (cell)
 		for (int i = 0; i < gridArray.length; i++) {
 			for (int j = 0; j < gridArray[0].length; j++) {
@@ -513,7 +481,17 @@ public class GameBoard implements MouseListener, MouseMotionListener {
 					g = gridArray[i][j];
 			}
 		}
-		
 		return g;
+	}
+
+	/**
+	 * Sets the highlight for all grids to false.
+	 */
+	private void clearHighlight() {
+		for (int i = 0; i < gridArray.length; i++) {
+			for (int j = 0; j < gridArray[0].length; j++) {
+				gridArray[i][j].setHighlight(false);
+			}
+		}
 	}
 }

@@ -14,6 +14,7 @@ import com.creepsmash.client.game.Game;
 import com.creepsmash.client.game.creeps.Creep;
 import com.creepsmash.client.game.creeps.CreepFactory;
 import com.creepsmash.client.game.grids.Grid;
+import com.creepsmash.client.game.panels.GameBoard;
 import com.creepsmash.client.game.strategies.Strategy;
 import com.creepsmash.client.game.strategies.StrategyFactory;
 import com.creepsmash.client.game.towers.Tower;
@@ -428,11 +429,6 @@ public class Context {
 		}
 		return false;
 	}
-	
-	public void buyTower(TowerType tower) {
-		if (this.started && !this.isDead())
-			this.gameBoard.buyTowerPerShortcut(tower);
-	}
 
 	/**
 	 * This methods builds the given tower at the given grid (cell) if possible.
@@ -452,6 +448,7 @@ public class Context {
 		}
 		return false;
 	}
+
 	/**
 	 * Upgrades the given tower.
 	 * 
